@@ -31,6 +31,10 @@ greenprop <- prop.table(table(greenbuildings$green_rating))
 print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequency")))
 ```
 
+As shown above, over 90% of the dataset is made out of non-green buildings, so there might not be an even comparison between the two.
+
+
+
 ## Milk Report
 ### The Approach: 
 
