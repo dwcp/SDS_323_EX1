@@ -36,6 +36,9 @@ print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequ
     ## |0            | 0.9132252|
     ## |1            | 0.0867748|
 
+As shown above, over 90% of the dataset is made out of non-green
+buildings, so there might not be an even comparison between the two.
+
 ## Milk Report
 
 ### The Approach:

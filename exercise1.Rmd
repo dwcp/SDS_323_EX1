@@ -31,7 +31,7 @@ greenprop <- prop.table(table(greenbuildings$green_rating))
 print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequency")))
 ```
 
-As shown above, over 90% of the dataset is made out of non-green buildings, so there might not be an even comparison between the two.
+As shown above, over 90% of the dataset is made out of non-green buildings, so there might not be an even comparison between the two. In addition, the confounding variable we discovered as age of the buildings. The age category potentially affects Rent, as newer buildings tend to be more expensive due to having modern features, and affects Green Rating, as newer buildings are more likely to have green certifications due to the facts that builders are currently more environmentally conscious and these green certifications are only a recent development (post 1992 and 1993 for Energystar and LEED respectively). We believe that the dataset is distorted by the abundance of older buildings; a housing developer would find a dataset of recent buildings to be more relevant.
 
 
 
