@@ -1,9 +1,44 @@
 Exercise1
 ================
 
-# Milk Report
+## Green Buildings
 
-## The Approach:
+According to the report by the total Excel guru, the reason that she
+recommends builing a green building is because of the increase in tenant
+rent which would result in greater profit. However, through our research
+on this dataset, we have discovered a confounding variable as well as
+inconsistencies in the dataset that makes her claim less credible.
+
+First, we would like to point out that there is a large disparity in the
+number of green vs non-green buildings in the dataset.
+
+``` r
+# Disparity between green housing and non green housing
+ggplot(greenbuildings, aes(x = green_rating == 1, fill=green_rating)) +
+  theme_classic() +
+  geom_bar(show.legend = FALSE) +
+  labs(y = "Buildings", x = "Green Rating", title = "Green vs Non-Green Housing")
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
+``` r
+# Add proportion
+greenprop <- prop.table(table(greenbuildings$green_rating))
+
+print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequency")))
+```
+
+    ## 
+    ## 
+    ## |Green Rating | Frequency|
+    ## |:------------|---------:|
+    ## |0            | 0.9132252|
+    ## |1            | 0.0867748|
+
+## Milk Report
+
+### The Approach:
 
 Using the guidelines from step 1 on the milk assignment, we used the
 variables N: net profit, Q: quantity sold, and c: unit cost to form the
@@ -18,7 +53,7 @@ We used a scatter plot to illustrate the relationship between P and Q.
 plot(sales ~ price, data=milk)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 Since the distribution of the points closely resemble that of an
 exponential function, we plotted another scatter plot comparing log(P)
@@ -30,7 +65,7 @@ plot(log(sales) ~ log(price), data=milk)
 abline(lm(log(sales) ~ log(price), data=milk))
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 The data illustrates a clear linear relationship between log(P) and
 log(Q). We created a regression model and identified the coefficients to
@@ -55,6 +90,6 @@ and visually identifying the maximum.
 curve((x-1)*110*x^(-1.62), from=2, to=3)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 From this graph, we can identify the max N as $2.61 for a given c of $1.

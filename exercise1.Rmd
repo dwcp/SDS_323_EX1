@@ -7,10 +7,32 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(mosaic)
-milk = read.csv("~/Downloads/milk.csv")
+library(knitr)
+milk = read.csv("./milk.csv")
+greenbuildings = read.csv("./greenbuildings.csv")
 ```
-# Milk Report
-## The Approach: 
+
+## Green Buildings
+
+According to the report by the total Excel guru, the reason that she recommends builing a green building is because of the increase in tenant rent which would result in greater profit. However, through our research on this dataset, we have discovered a confounding variable as well as inconsistencies in the dataset that makes her claim less credible.
+
+First, we would like to point out that there is a large disparity in the number of green vs non-green buildings in the dataset.
+
+```{r}
+# Disparity between green housing and non green housing
+ggplot(greenbuildings, aes(x = green_rating == 1, fill=green_rating)) +
+  theme_classic() +
+  geom_bar(show.legend = FALSE) +
+  labs(y = "Buildings", x = "Green Rating", title = "Green vs Non-Green Housing")
+
+# Add proportion
+greenprop <- prop.table(table(greenbuildings$green_rating))
+
+print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequency")))
+```
+
+## Milk Report
+### The Approach: 
 
 Using the guidelines from step 1 on the milk assignment, we used the variables N: net profit, Q: quantity sold, and c: unit cost to form the equation that follows.
 N = QP - Qc
