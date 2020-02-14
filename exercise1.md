@@ -224,6 +224,7 @@ $1.74.
 ``` r
 ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
   geom_boxplot() +
+  xlab("LEED") +
   scale_fill_discrete(name = "LEED", labels = c("FALSE", "TRUE"))
 ```
 
@@ -247,7 +248,8 @@ print(kable(test1, format = "markdown", col.names = c("LEED", "Median Rent")))
 ``` r
 ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energystar))) +
   geom_boxplot() +
-  scale_fill_discrete(name = "Energy Star", labels = c("FALSE", "TRUE"))
+  scale_fill_discrete(name = "Energy Star", labels = c("FALSE", "TRUE")) +
+  xlab("Energy Star")
 ```
 
 ![](exercise1_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->

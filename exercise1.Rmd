@@ -130,6 +130,7 @@ Finally, we noticed that a building has a green rating if it has either the Ener
 ```{r}
 ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
   geom_boxplot() +
+  xlab("LEED") +
   scale_fill_discrete(name = "LEED", labels = c("FALSE", "TRUE"))
 
 test1 = filter(greenbuildings, age < 10) %>%
@@ -140,7 +141,8 @@ print(kable(test1, format = "markdown", col.names = c("LEED", "Median Rent")))
 
 ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energystar))) +
   geom_boxplot() +
-  scale_fill_discrete(name = "Energy Star", labels = c("FALSE", "TRUE"))
+  scale_fill_discrete(name = "Energy Star", labels = c("FALSE", "TRUE")) +
+  xlab("Energy Star")
 
 test2 = filter(greenbuildings, age < 10) %>%
   group_by(Energystar) %>%
