@@ -117,7 +117,8 @@ The age category potentially affects Rent, as newer buildings tend to be more ex
 ```{r}
 ggplot(filter(greenbuildings, age < 10 ), aes(fill = factor(green_rating), x = factor(green_rating), y = Rent)) +
   labs(x = "Green Rating", y = "Rent", title = "Rent vs Green Rating for Buildings < 10 Years")+
-  geom_boxplot()
+  geom_boxplot() +
+  scale_fill_discrete(name = "Green Rating", labels = c("FALSE", "TRUE"))
 test = filter(greenbuildings, age < 10) %>%
   group_by(green_rating) %>%
   summarise(median_rent = median(Rent))
@@ -128,7 +129,8 @@ Finally, we noticed that a building has a green rating if it has either the Ener
 
 ```{r}
 ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
-  geom_boxplot()
+  geom_boxplot() +
+  scale_fill_discrete(name = "LEED", labels = c("FALSE", "TRUE"))
 
 test1 = filter(greenbuildings, age < 10) %>%
   group_by(LEED) %>%
@@ -137,7 +139,8 @@ test1 = filter(greenbuildings, age < 10) %>%
 print(kable(test1, format = "markdown", col.names = c("LEED", "Median Rent")))
 
 ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energystar))) +
-  geom_boxplot()
+  geom_boxplot() +
+  scale_fill_discrete(name = "Energy Star", labels = c("FALSE", "TRUE"))
 
 test2 = filter(greenbuildings, age < 10) %>%
   group_by(Energystar) %>%

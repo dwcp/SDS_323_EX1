@@ -191,7 +191,8 @@ $2.5.
 ``` r
 ggplot(filter(greenbuildings, age < 10 ), aes(fill = factor(green_rating), x = factor(green_rating), y = Rent)) +
   labs(x = "Green Rating", y = "Rent", title = "Rent vs Green Rating for Buildings < 10 Years")+
-  geom_boxplot()
+  geom_boxplot() +
+  scale_fill_discrete(name = "Green Rating", labels = c("FALSE", "TRUE"))
 ```
 
 ![](exercise1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
@@ -222,7 +223,8 @@ $1.74.
 
 ``` r
 ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
-  geom_boxplot()
+  geom_boxplot() +
+  scale_fill_discrete(name = "LEED", labels = c("FALSE", "TRUE"))
 ```
 
 ![](exercise1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
@@ -244,7 +246,8 @@ print(kable(test1, format = "markdown", col.names = c("LEED", "Median Rent")))
 
 ``` r
 ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energystar))) +
-  geom_boxplot()
+  geom_boxplot() +
+  scale_fill_discrete(name = "Energy Star", labels = c("FALSE", "TRUE"))
 ```
 
 ![](exercise1_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
