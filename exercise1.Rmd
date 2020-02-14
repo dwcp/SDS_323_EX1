@@ -54,6 +54,30 @@ test = filter(greenbuildings, age < 10) %>%
 print(kable(test, format = "markdown", col.names = c("Green Rating", "Median Rent")))
 ```
 
+Finally, we noticed that a building has a green rating if it has either the Energystar or LEED certification, both of which use different criteria for qualification. Therefore, some buildings in the dataset are more green than others which causes some inconsistency in the data provided. For example, the median rent of LEED certified buildings are higher than that of non-LEED certified buildings by \$4, while the median rent of Energy Star certified buildings is less than non-Energy Star certified buildings by \$1.74.
+
+```{r}
+ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
+  geom_boxplot()
+
+test1 = filter(greenbuildings, age < 10) %>%
+  group_by(LEED) %>%
+  summarise(median_rent = median(Rent))
+
+print(kable(test1, format = "markdown", col.names = c("LEED", "Median Rent")))
+
+ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energystar))) +
+  geom_boxplot()
+
+test2 = filter(greenbuildings, age < 10) %>%
+  group_by(Energystar) %>%
+  summarise(median_rent = median(Rent))
+
+print(kable(test2, format = "markdown", col.names = c("LEED", "Median Rent")))
+```
+
+In light of the above findings, we find it hard to recommend building the green building solely based on rent increase due to green certification.
+
 ## Milk Report
 ### The Approach: 
 

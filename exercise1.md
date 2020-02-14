@@ -59,7 +59,91 @@ the facts that builders are currently more environmentally conscious and
 these green certifications are only a recent development (post 1992 and
 1993 for Energystar and LEED respectively). We believe that the dataset
 is distorted by the abundance of older buildings; a housing developer
-would find a dataset of recent buildings to be more relevant.
+would find a dataset of recent buildings to be more relevant. A better
+solution would be to look at buildings less than 10 years old, as shown
+in the plot below. This analysis indicates that recently built green
+buildings in fact have a lower median Rent by about
+$2.5.
+
+``` r
+ggplot(filter(greenbuildings, age < 10 ), aes(fill = factor(green_rating), x = factor(green_rating), y = Rent)) +
+  labs(x = "Green Rating", y = "Rent", title = "Rent vs Green Rating for Buildings < 10 Years")+
+  geom_boxplot()
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+``` r
+test = filter(greenbuildings, age < 10) %>%
+  group_by(green_rating) %>%
+  summarise(median_rent = median(Rent))
+print(kable(test, format = "markdown", col.names = c("Green Rating", "Median Rent")))
+```
+
+    ## 
+    ## 
+    ## | Green Rating| Median Rent|
+    ## |------------:|-----------:|
+    ## |            0|      29.000|
+    ## |            1|      26.625|
+
+Finally, we noticed that a building has a green rating if it has either
+the Energystar or LEED certification, both of which use different
+criteria for qualification. Therefore, some buildings in the dataset are
+more green than others which causes some inconsistency in the data
+provided. For example, the median rent of LEED certified buildings are
+higher than that of non-LEED certified buildings by $4, while the median
+rent of Energy Star certified buildings is less than non-Energy Star
+certified buildings by
+$1.74.
+
+``` r
+ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
+  geom_boxplot()
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
+test1 = filter(greenbuildings, age < 10) %>%
+  group_by(LEED) %>%
+  summarise(median_rent = median(Rent))
+
+print(kable(test1, format = "markdown", col.names = c("LEED", "Median Rent")))
+```
+
+    ## 
+    ## 
+    ## | LEED| Median Rent|
+    ## |----:|-----------:|
+    ## |    0|        28.5|
+    ## |    1|        24.5|
+
+``` r
+ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energystar))) +
+  geom_boxplot()
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+
+``` r
+test2 = filter(greenbuildings, age < 10) %>%
+  group_by(Energystar) %>%
+  summarise(median_rent = median(Rent))
+
+print(kable(test2, format = "markdown", col.names = c("LEED", "Median Rent")))
+```
+
+    ## 
+    ## 
+    ## | LEED| Median Rent|
+    ## |----:|-----------:|
+    ## |    0|       28.50|
+    ## |    1|       26.76|
+
+In light of the above findings, we find it hard to recommend building
+the green building solely based on rent increase due to green
+certification.
 
 ## Milk Report
 
@@ -78,7 +162,7 @@ We used a scatter plot to illustrate the relationship between P and Q.
 plot(sales ~ price, data=milk)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 Since the distribution of the points closely resemble that of an
 exponential function, we plotted another scatter plot comparing log(P)
@@ -90,7 +174,7 @@ plot(log(sales) ~ log(price), data=milk)
 abline(lm(log(sales) ~ log(price), data=milk))
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 The data illustrates a clear linear relationship between log(P) and
 log(Q). We created a regression model and identified the coefficients to
@@ -115,6 +199,6 @@ and visually identifying the maximum.
 curve((x-1)*110*x^(-1.62), from=2, to=3)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 From this graph, we can identify the max N as $2.61 for a given c of $1.
