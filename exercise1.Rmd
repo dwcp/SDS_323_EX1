@@ -42,7 +42,17 @@ ggplot(greenbuildings, aes(x = age, fill = green_rating == 1)) +
   scale_fill_discrete(name = "Green Rating")
 ```
 
-The age category potentially affects Rent, as newer buildings tend to be more expensive due to having modern features, and affects Green Rating, as newer buildings are more likely to have green certifications due to the facts that builders are currently more environmentally conscious and these green certifications are only a recent development (post 1992 and 1993 for Energystar and LEED respectively). We believe that the dataset is distorted by the abundance of older buildings; a housing developer would find a dataset of recent buildings to be more relevant.
+The age category potentially affects Rent, as newer buildings tend to be more expensive due to having modern features, and affects Green Rating, as newer buildings are more likely to have green certifications due to the facts that builders are currently more environmentally conscious and these green certifications are only a recent development (post 1992 and 1993 for Energystar and LEED respectively). We believe that the dataset is distorted by the abundance of older buildings; a housing developer would find a dataset of recent buildings to be more relevant. A better solution would be to look at buildings less than 10 years old, as shown in the plot below. This analysis indicates that recently built green buildings in fact have a lower median Rent by about $2.5.
+
+```{r}
+ggplot(filter(greenbuildings, age < 10 ), aes(fill = factor(green_rating), x = factor(green_rating), y = Rent)) +
+  labs(x = "Green Rating", y = "Rent", title = "Rent vs Green Rating for Buildings < 10 Years")+
+  geom_boxplot()
+test = filter(greenbuildings, age < 10) %>%
+  group_by(green_rating) %>%
+  summarise(median_rent = median(Rent))
+print(kable(test, format = "markdown", col.names = c("Green Rating", "Median Rent")))
+```
 
 ## Milk Report
 ### The Approach: 
