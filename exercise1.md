@@ -4,15 +4,29 @@ Exercise1
 ## ABIA
 
 ``` r
-# Histogram showing proportion of green rating by rent faceted
-ggplot(filter(ABIA, Dest != "AUS"), aes(x = factor(Dest), fill = factor(Dest))) +
-  theme_bw() +
-  facet_wrap(~ UniqueCarrier, ncol = 1) +
-  geom_bar() +
-  labs(y = "houses", x = "rent price", title = "Proportion of Green Rating by Rent")
+temp3 = ABIA %>%
+  group_by(UniqueCarrier, Cancelled) %>%
+  summarise(cancel_sum = n())
+
+ggplot(temp3, aes(x=reorder(UniqueCarrier, -cancel_sum), y = cancel_sum)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(x = "Carrier", y = "Cancelled Flights", title = "Cancelled Flights by Carrier")
 ```
 
 ![](exercise1_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
+``` r
+# Histogram showing proportion of green rating by rent faceted
+ggplot(filter(ABIA, (UniqueCarrier == "WN" | UniqueCarrier == "CO" | UniqueCarrier == "AA") & CancellationCode != ""), aes(x = factor(CancellationCode), fill = factor(CancellationCode))) +
+  theme_bw() +
+  facet_wrap(~ UniqueCarrier, ncol = 1) +
+  geom_bar() +
+  labs(y = "Cancelled Flights", x = "Cancellation Code", title = "Top 3 Carriers in terms of Cancellations") +
+  facet_grid(. ~ UniqueCarrier, labeller = labeller(UniqueCarrier = c(AA = "American Airlines", CO = "Continental Airlines", WN = "Southwest Airlines"))) +
+  scale_fill_discrete(name = "Cancellation Codes", labels = c("Carrier", "Weather", "NAS"))
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-1-2.png)<!-- -->
 
 ## Regression Practice
 
