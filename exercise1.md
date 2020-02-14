@@ -1,6 +1,19 @@
 Exercise1
 ================
 
+## ABIA
+
+``` r
+# Histogram showing proportion of green rating by rent faceted
+ggplot(filter(ABIA, Dest != "AUS"), aes(x = factor(Dest), fill = factor(Dest))) +
+  theme_bw() +
+  facet_wrap(~ UniqueCarrier, ncol = 1) +
+  geom_bar() +
+  labs(y = "houses", x = "rent price", title = "Proportion of Green Rating by Rent")
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
 ## Green Buildings
 
 According to the report by the total Excel guru, the reason that she
@@ -20,7 +33,7 @@ ggplot(greenbuildings, aes(x = green_rating == 1, fill=green_rating)) +
   labs(y = "Buildings", x = "Green Rating", title = "Green vs Non-Green Housing")
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 # Add proportion
@@ -46,11 +59,11 @@ buildings.
 ggplot(greenbuildings, aes(x = age, fill = green_rating == 1)) +
   theme_bw() +
   geom_density(alpha = 0.5) +
-  labs(x = "Age of Building", y = "Number of Buildings") +
+  labs(x = "Age of Building", y = "Percentage of Buildings") +
   scale_fill_discrete(name = "Green Rating")
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 The age category potentially affects Rent, as newer buildings tend to be
 more expensive due to having modern features, and affects Green Rating,
@@ -71,7 +84,7 @@ ggplot(filter(greenbuildings, age < 10 ), aes(fill = factor(green_rating), x = f
   geom_boxplot()
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
 test = filter(greenbuildings, age < 10) %>%
@@ -102,7 +115,7 @@ ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
   geom_boxplot()
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 test1 = filter(greenbuildings, age < 10) %>%
@@ -124,7 +137,7 @@ ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energ
   geom_boxplot()
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
 
 ``` r
 test2 = filter(greenbuildings, age < 10) %>%
@@ -162,7 +175,7 @@ We used a scatter plot to illustrate the relationship between P and Q.
 plot(sales ~ price, data=milk)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 Since the distribution of the points closely resemble that of an
 exponential function, we plotted another scatter plot comparing log(P)
@@ -174,7 +187,7 @@ plot(log(sales) ~ log(price), data=milk)
 abline(lm(log(sales) ~ log(price), data=milk))
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 The data illustrates a clear linear relationship between log(P) and
 log(Q). We created a regression model and identified the coefficients to
@@ -199,6 +212,6 @@ and visually identifying the maximum.
 curve((x-1)*110*x^(-1.62), from=2, to=3)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 From this graph, we can identify the max N as $2.61 for a given c of $1.

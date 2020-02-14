@@ -10,6 +10,18 @@ library(mosaic)
 library(knitr)
 milk = read.csv("./milk.csv")
 greenbuildings = read.csv("./greenbuildings.csv")
+ABIA = read.csv("./ABIA.csv")
+```
+
+## ABIA
+
+```{r, fig.width=20, fig.height=50}
+# Histogram showing proportion of green rating by rent faceted
+ggplot(filter(ABIA, Dest != "AUS"), aes(x = factor(Dest), fill = factor(Dest))) +
+  theme_bw() +
+  facet_wrap(~ UniqueCarrier, ncol = 1) +
+  geom_bar() +
+  labs(y = "houses", x = "rent price", title = "Proportion of Green Rating by Rent")
 ```
 
 ## Green Buildings
@@ -38,7 +50,7 @@ As shown above, over 90% of the dataset is made out of non-green buildings, so t
 ggplot(greenbuildings, aes(x = age, fill = green_rating == 1)) +
   theme_bw() +
   geom_density(alpha = 0.5) +
-  labs(x = "Age of Building", y = "Number of Buildings") +
+  labs(x = "Age of Building", y = "Percentage of Buildings") +
   scale_fill_discrete(name = "Green Rating")
 ```
 
