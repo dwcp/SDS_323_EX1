@@ -37,7 +37,29 @@ print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequ
     ## |1            | 0.0867748|
 
 As shown above, over 90% of the dataset is made out of non-green
-buildings, so there might not be an even comparison between the two.
+buildings, so there might not be an even comparison between the two. In
+addition, the confounding variable we discovered as age of the
+buildings.
+
+``` r
+# Histogram showing proportion of green rating by age
+ggplot(greenbuildings, aes(x = age, fill = green_rating == 1)) +
+  theme_bw() +
+  geom_density(alpha = 0.5) +
+  labs(x = "Age of Building", y = "Number of Buildings") +
+  scale_fill_discrete(name = "Green Rating")
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+The age category potentially affects Rent, as newer buildings tend to be
+more expensive due to having modern features, and affects Green Rating,
+as newer buildings are more likely to have green certifications due to
+the facts that builders are currently more environmentally conscious and
+these green certifications are only a recent development (post 1992 and
+1993 for Energystar and LEED respectively). We believe that the dataset
+is distorted by the abundance of older buildings; a housing developer
+would find a dataset of recent buildings to be more relevant.
 
 ## Milk Report
 
@@ -56,7 +78,7 @@ We used a scatter plot to illustrate the relationship between P and Q.
 plot(sales ~ price, data=milk)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 Since the distribution of the points closely resemble that of an
 exponential function, we plotted another scatter plot comparing log(P)
@@ -68,7 +90,7 @@ plot(log(sales) ~ log(price), data=milk)
 abline(lm(log(sales) ~ log(price), data=milk))
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 The data illustrates a clear linear relationship between log(P) and
 log(Q). We created a regression model and identified the coefficients to
@@ -93,6 +115,6 @@ and visually identifying the maximum.
 curve((x-1)*110*x^(-1.62), from=2, to=3)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 From this graph, we can identify the max N as $2.61 for a given c of $1.
