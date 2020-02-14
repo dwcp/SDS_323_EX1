@@ -14,6 +14,102 @@ ggplot(filter(ABIA, Dest != "AUS"), aes(x = factor(Dest), fill = factor(Dest))) 
 
 ![](exercise1_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
+## Regression Practice
+
+``` r
+ggplot(creatinine, aes(x=age, y=creatclear)) + 
+  geom_point() +
+  geom_smooth(method="lm") + 
+  labs(
+    x = "age (years)",
+    y = "creatinine clearance rate (mL/minute)",
+    title = "Creatinine Clearance Rate vs Age"
+  )
+```
+
+![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
+reg = lm(creatclear ~ age, data=creatinine)
+coef(reg) ## just coefficients
+```
+
+    ## (Intercept)         age 
+    ## 147.8129158  -0.6198159
+
+Using the linear regression model for creatinine clearance rate as a
+function of age, we obtain the following equation: Y(creatinine
+clearance rate, mL/min) = -0.620\*X(age, years) + 147.813(mL/min)
+
+*What creatinine clearance rate should we expect, on average, for a
+55-year-old?*
+
+``` r
+-0.62*55 + 147.813
+```
+
+    ## [1] 113.713
+
+By using the regression model, we can expect an average creatinine
+clearance rate for a 55 year old to be 113.713mL/min.
+
+*How does creatinine clearance rate change with age? (This should be a
+number with units mL/min per year).*
+
+Looking at the slope of the linear model, creatinine clearance rate
+changes by -0.620mL/min per year.
+
+*Whose creatinine clearance rate is healthier (higher) for their age: a
+40-year-old with a rate of 135, or a 60-year-old with a rate of 112?*
+
+Using the model, we can determine health by looking at the percent
+difference between actual and expected creatinine clearance rates for
+each age.
+
+``` r
+-0.62*40 + 147.813 #Expected 40 year old
+```
+
+    ## [1] 123.013
+
+``` r
+-0.62*60 + 147.813 #Expected 60 year old
+```
+
+    ## [1] 110.613
+
+``` r
+#The difference for the 40 year old is:
+135 - 123.013
+```
+
+    ## [1] 11.987
+
+``` r
+#The difference for the 60 year old is:
+112 - 110.613
+```
+
+    ## [1] 1.387
+
+``` r
+#Percent difference for each:
+100 * 11.987/((135 + 123.013)/2)
+```
+
+    ## [1] 9.29178
+
+``` r
+100 * 1.387/((112 + 110.613)/2) 
+```
+
+    ## [1] 1.246109
+
+The 40 year old’s creatinine clearance rate is 9.29% higher than
+expected for their age, while the 60 year old’s rate is only 1.25%
+higher. From this, we can determine that the 40 year old has a healthier
+creatinine clearance rate for their age.
+
 ## Green Buildings
 
 According to the report by the total Excel guru, the reason that she
@@ -33,7 +129,7 @@ ggplot(greenbuildings, aes(x = green_rating == 1, fill=green_rating)) +
   labs(y = "Buildings", x = "Green Rating", title = "Green vs Non-Green Housing")
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 # Add proportion
@@ -51,8 +147,8 @@ print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequ
 
 As shown above, over 90% of the dataset is made out of non-green
 buildings, so there might not be an even comparison between the two. In
-addition, the confounding variable we discovered as age of the
-buildings.
+addition, the possible confounding variable we discovered was the age of
+the buildings.
 
 ``` r
 # Histogram showing proportion of green rating by age
@@ -63,7 +159,7 @@ ggplot(greenbuildings, aes(x = age, fill = green_rating == 1)) +
   scale_fill_discrete(name = "Green Rating")
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 The age category potentially affects Rent, as newer buildings tend to be
 more expensive due to having modern features, and affects Green Rating,
@@ -84,7 +180,7 @@ ggplot(filter(greenbuildings, age < 10 ), aes(fill = factor(green_rating), x = f
   geom_boxplot()
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 test = filter(greenbuildings, age < 10) %>%
@@ -115,7 +211,7 @@ ggplot(greenbuildings, aes(x = factor(LEED), y = Rent, fill = factor(LEED))) +
   geom_boxplot()
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 test1 = filter(greenbuildings, age < 10) %>%
@@ -137,7 +233,7 @@ ggplot(greenbuildings, aes(x = factor(Energystar), y = Rent, fill = factor(Energ
   geom_boxplot()
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
 
 ``` r
 test2 = filter(greenbuildings, age < 10) %>%
@@ -175,7 +271,7 @@ We used a scatter plot to illustrate the relationship between P and Q.
 plot(sales ~ price, data=milk)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 Since the distribution of the points closely resemble that of an
 exponential function, we plotted another scatter plot comparing log(P)
@@ -187,7 +283,7 @@ plot(log(sales) ~ log(price), data=milk)
 abline(lm(log(sales) ~ log(price), data=milk))
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 The data illustrates a clear linear relationship between log(P) and
 log(Q). We created a regression model and identified the coefficients to
@@ -212,6 +308,6 @@ and visually identifying the maximum.
 curve((x-1)*110*x^(-1.62), from=2, to=3)
 ```
 
-![](exercise1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](exercise1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 From this graph, we can identify the max N as $2.61 for a given c of $1.

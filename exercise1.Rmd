@@ -11,6 +11,7 @@ library(knitr)
 milk = read.csv("./milk.csv")
 greenbuildings = read.csv("./greenbuildings.csv")
 ABIA = read.csv("./ABIA.csv")
+creatinine = read.csv("./creatinine.csv")
 ```
 
 ## ABIA
@@ -23,6 +24,53 @@ ggplot(filter(ABIA, Dest != "AUS"), aes(x = factor(Dest), fill = factor(Dest))) 
   geom_bar() +
   labs(y = "houses", x = "rent price", title = "Proportion of Green Rating by Rent")
 ```
+
+## Regression Practice
+
+```{r}
+ggplot(creatinine, aes(x=age, y=creatclear)) + 
+  geom_point() +
+  geom_smooth(method="lm") + 
+  labs(
+    x = "age (years)",
+    y = "creatinine clearance rate (mL/minute)",
+    title = "Creatinine Clearance Rate vs Age"
+  )
+reg = lm(creatclear ~ age, data=creatinine)
+coef(reg) ## just coefficients
+
+```
+Using the linear regression model for creatinine clearance rate as a function of age, we obtain the following equation: 
+Y(creatinine clearance rate, mL/min) = -0.620*X(age, years) + 147.813(mL/min)
+
+*What creatinine clearance rate should we expect, on average, for a 55-year-old?*
+```{r}
+-0.62*55 + 147.813
+```
+By using the regression model, we can expect an average creatinine clearance rate for a 55 year old to be 113.713mL/min. 
+
+*How does creatinine clearance rate change with age? (This should be a number with units mL/min per year).*
+
+Looking at the slope of the linear model, creatinine clearance rate changes by -0.620mL/min per year.
+
+*Whose creatinine clearance rate is healthier (higher) for their age: a 40-year-old with a rate of 135, or a 60-year-old with a rate of 112?*
+
+Using the model, we can determine health by looking at the percent difference between actual and expected creatinine clearance rates for each age. 
+```{r}
+-0.62*40 + 147.813 #Expected 40 year old
+-0.62*60 + 147.813 #Expected 60 year old
+```
+```{r}
+#The difference for the 40 year old is:
+135 - 123.013
+#The difference for the 60 year old is:
+112 - 110.613
+#Percent difference for each:
+100 * 11.987/((135 + 123.013)/2)
+100 * 1.387/((112 + 110.613)/2) 
+
+```
+The 40 year old's creatinine clearance rate is 9.29% higher than expected for their age, while the 60 year old's rate is only 1.25% higher. From this, we can determine that the 40 year old has a healthier creatinine clearance rate for their age. 
 
 ## Green Buildings
 
@@ -43,7 +91,7 @@ greenprop <- prop.table(table(greenbuildings$green_rating))
 print(kable(greenprop, format = "markdown", col.names = c("Green Rating", "Frequency")))
 ```
 
-As shown above, over 90% of the dataset is made out of non-green buildings, so there might not be an even comparison between the two. In addition, the confounding variable we discovered as age of the buildings.
+As shown above, over 90% of the dataset is made out of non-green buildings, so there might not be an even comparison between the two. In addition, the possible confounding variable we discovered was the age of the buildings.
 
 ```{r}
 # Histogram showing proportion of green rating by age
